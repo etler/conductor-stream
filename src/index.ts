@@ -1,6 +1,5 @@
-import { asyncIterableSequencer, Chain } from "@/lib/asyncIterableSequencer";
+import { asyncIterableSequencer, Chain } from "async-iterable-sequencer";
 
-export type { Chain } from "@/lib/asyncIterableSequencer";
 export interface ConductorStreamOptions<I, O> {
   start?: (chain: Chain<O>) => void;
   transform: (chunk: I, chain: Chain<O>) => void;

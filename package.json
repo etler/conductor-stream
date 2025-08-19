@@ -26,10 +26,12 @@
     "test": "tsc -p tests && vitest run --config tests/vitest.config.mts",
     "fix": "npx eslint --fix"
   },
-  "dependencies": {},
+  "dependencies": {
+    "async-iterable-sequencer": "^0.0.0"
+  },
   "devDependencies": {
-    "@types/node": "^24.0.6",
     "@eslint/js": "^9.21.0",
+    "@types/node": "^24.0.6",
     "eslint": "~9.21.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "~5.2.3",
