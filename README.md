@@ -119,3 +119,10 @@ Triggers when the inbound `WritableStream` is closed to allow for cleanup and cl
 #### `Chain`
 
 Function signature for chain function. Chains an iterable to the sequencer. `null` must be passed to signal the end of input and end the sequence chain and close the outbound writable stream.
+
+## License
+
+[MIT][license] © [Tim Etler][author]
+
+[license]: LICENSE.md
+[author]: https://github.com/etler
