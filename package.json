@@ -1,6 +1,6 @@
 {
   "name": "conductor-stream",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": "github:etler/conductor-stream",
   "license": "MIT",
   "type": "module",
