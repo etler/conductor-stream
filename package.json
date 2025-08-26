@@ -27,7 +27,7 @@
     "fix": "npx eslint --fix"
   },
   "dependencies": {
-    "async-iterable-sequencer": "^0.0.0"
+    "async-iterable-sequencer": "^0.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
