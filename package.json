@@ -1,7 +1,7 @@
 {
-  "name": "conductor-stream",
-  "version": "0.0.1",
-  "repository": "github:etler/conductor-stream",
+  "name": "delegate-stream",
+  "version": "0.0.0",
+  "repository": "github:etler/delegate-stream",
   "license": "MIT",
   "type": "module",
   "module": "dist/index.js",

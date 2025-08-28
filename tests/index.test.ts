@@ -1,12 +1,12 @@
-import { ConductorStream } from "@/index";
+import { DelegateStream } from "@/index";
 
-describe("Conductor Stream", () => {
+describe("DelegateStream", () => {
   it("should chain a stream sequence in order without blocking the streams", async () => {
     let timeIndex = 0;
     let maxTime = 0;
     const timing: number[] = new Array<number>(10).fill(0).map(() => ++timeIndex);
     const inboundStream = new DelayStream(...timing);
-    const conductor = new ConductorStream<number, number>({
+    const delegator = new DelegateStream<number, number>({
       start: (chain) => {
         let timeIndex = 0;
         const timing: number[] = new Array<number>(10).fill(0).map(() => timeIndex++);
@@ -22,7 +22,7 @@ describe("Conductor Stream", () => {
         chain(null);
       },
     });
-    const outboundStream = inboundStream.pipeThrough(conductor);
+    const outboundStream = inboundStream.pipeThrough(delegator);
     let testIndex = 0;
     const startTime = Date.now();
     for await (const item of outboundStream) {

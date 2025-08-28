@@ -1,27 +1,27 @@
-# conductor-stream
+# delegate-stream
 
 A Transform Stream interface implementation that allows for dynamically injecting streams by chaining entire streams as well as any async iterable.
 
 ## Installation
 
 ```bash
-npm install conductor-stream
+npm install delegate-stream
 ```
 
 ```bash
-yarn add conductor-stream
+yarn add delegate-stream
 ```
 
 ## Usage
 
-A complete example of using a conductor stream handler to parse for a template string and chain a sub stream.
+A complete example of using a delegate stream handler to parse for a template string and chain a sub stream.
 
 ```typescript
-import { ConductorStream } from 'conductor-stream';
+import { DelegateStream } from 'delegate-stream';
 
 let buffer = "";
 
-const conductorStream = new ConductorStream<string, string>({
+const delegateStream = new DelegateStream<string, string>({
   transform(chunk, chain) {
     const combined = buffer + chunk;
     const partialMatch = /(?<before>.*?)(?<partial>{{[^}]*)$/.exec(combined);
@@ -36,7 +36,7 @@ const conductorStream = new ConductorStream<string, string>({
       textToProcess = combined;
     }
 
-    const conductorChunks =
+    const delegateChunks =
       textToProcess !== undefined
         ? textToProcess
             .split(/({{.*?}})/)
@@ -46,7 +46,7 @@ const conductorStream = new ConductorStream<string, string>({
               return content !== undefined ? createStringStream(content).pipeThrough(createUpperCaseTransform()) : part;
             })
         : [];
-    chain(conductorChunks.values());
+    chain(delegateChunks.values());
   },
   finish(chain) {
     const result = buffer ? [buffer] : [];
@@ -80,39 +80,39 @@ createStringStream("This is a {{stream}} with {{injected}} content").pipeThrough
 
 ### Exports
 
-#### `ConductorStream`
+#### `DelegateStream`
 
-The `ConductorStream` class is responsible for emitting chunks through `readable` by chaining async iterables together to be flattened and read. The class implements the `TransformStream` interface and may be used in `pipeThrough` calls as well as any other interface that accepts a `TransformStream` interface.
+The `DelegateStream` class is responsible for emitting chunks through `readable` by chaining async iterables together to be flattened and read. The class implements the `TransformStream` interface and may be used in `pipeThrough` calls as well as any other interface that accepts a `TransformStream` interface.
 
 ```typescript
-class ConductorStream<I, O> {
+class DelegateStream<I, O> {
   public readable: ReadableStream<O>;
   public writable: WritableStream<I>;
-  constructor(options: ConductorStreamOptions<I, O>)
+  constructor(options: DelegateStreamOptions<I, O>)
 }
 ```
 
 ### Types
 
-##### `ConductorStreamOptions`
+##### `DelegateStreamOptions`
 
 ```typescript
-interface ConductorStreamOptions<I, O> {
+interface DelegateStreamOptions<I, O> {
   start?: (chain: Chain<O>) => void;
   transform: (chunk: I, chain: Chain<O>) => void;
   finish?: (chain: Chain<O>) => void;
 }
 ```
 
-##### `ConductorStreamOptions.start`
+##### `DelegateStreamOptions.start`
 
 Triggers when the stream is initialized to allow for chaining async iterables on startup.
 
-##### `ConductorStreamOptions.transform`
+##### `DelegateStreamOptions.transform`
 
 Triggered when chunks are written to the inbound `WritableStream` and allows for chaining async iterables based on the incoming data recieved.
 
-##### `ConductorStreamOptions.finish`
+##### `DelegateStreamOptions.finish`
 
 Triggers when the inbound `WritableStream` is closed to allow for cleanup and closing of the chain.
 
